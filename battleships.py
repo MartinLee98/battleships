@@ -1,4 +1,5 @@
-import copy, random
+import copy
+import random
 
 
 board = []
@@ -120,3 +121,24 @@ def computer_place_ships(board, ships):
 
     return board
 
+
+def user_move(board):
+    while True:
+        x, y = get_coordinates()
+        res = make_move(board, x, y)
+
+        if res == "hit":
+            print("Hit at " + str(x+1) + "," + str(y+1))
+            check_sink(board, x, y)
+            board[x][y] = '$'
+
+            if check_win(board):
+                return 'WIN'
+        elif res == 'miss':
+            print("Sorry, " + str(x+1) + ", " + str(y+1) + " is a miss.")
+            board[x][y] = "*"
+        elif res == "try again":
+            print("Sorry, that coordinate was already hit. Please try again.")
+
+        if res != "try again":
+            return board
