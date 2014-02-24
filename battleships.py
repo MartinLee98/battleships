@@ -1,4 +1,4 @@
-import copy
+import copy, random
 
 
 board = []
@@ -98,3 +98,25 @@ def place_ship(board, ship, s, x, y, orientation):
             board[x][y+i] = s
 
     return board
+
+
+def computer_place_ships(board, ships):
+    for ship in ships.keys():
+        valid = False
+
+        while not valid:
+            x = random.randint(1, 10) - 1
+            y = random.randint(1, 10) - 1
+            o = random.randint(0, 1)
+
+            if o == 0:
+                orientation = 'v'
+            else:
+                orientation = 'h'
+            valid = validate(board, ships[ship], x, y, orientation)
+
+        print("Computer placing a/an" + ship)
+        board = place_ship(board, ships[ship], ship[0], x, y, orientation)
+
+    return board
+
