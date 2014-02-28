@@ -2,26 +2,11 @@ import copy
 import random
 
 
-board = []
-
-for i in range(10):
-    board_row = []
-    for j in range(10):
-        board_row.append(-1)
-    board.append(board_row)
-
-user_board = copy.deepcopy(board)
-comp_board = copy.deepcopy(board)
-ships = {
-    'aircraft carrier': 5,
-    'battleship': 4,
-    'submarine': 3,
-    'destroyer': 3,
-    'patrol boat': 2
-}
-
-
 def user_place_ships(board, ships):
+    orientation = ''
+    x = ''
+    y = ''
+
     for ship in ships.keys():
         valid = False
 
@@ -102,6 +87,10 @@ def place_ship(board, ship, s, x, y, orientation):
 
 
 def computer_place_ships(board, ships):
+    orientation = ''
+    x = ''
+    y = ''
+
     for ship in ships.keys():
         valid = False
 
@@ -142,6 +131,7 @@ def user_move(board):
 
         if res != "try again":
             return board
+
 
 def computer_move(board):
     while True:
@@ -209,37 +199,87 @@ def print_board(s, board):
         player = 'User'
 
     print('The ' + player + '\'s board looks like this: \n')
-    print(' ')
 
+    print(' ', end="")
     for i in range(10):
-        print(' ' + str(i+1) + ' ')
+        if i == 0:
+            print(' ' + str(i+1) + ' ', end="")
+        else:
+            print('  ' + str(i+1) + ' ', end="")
     print('\n')
 
     for i in range(10):
         if i != 9:
-            print(str(i+1) + ' ')
+            print(str(i+1) + ' ', end="")
         else:
-            print(str(i+1) + '')
+            print(str(i+1) + '', end="")
 
         for j in range(10):
             if board[i][j] == -1:
-                print(' ')
+                print(' ', end="")
             elif s == 'u':
-                print(board[i][j])
+                print(board[i][j], end="")
             elif s == 'c':
                 if board[i][j] == '*' or board[i][j] == '$':
-                    print(board[i][j])
+                    print(board[i][j], end="")
                 else:
-                    print(" ")
+                    print(" ", end="")
 
             if j != 9:
-                print(" | ")
+                print(" | ", end="")
 
         print()
 
         if i != 9:
-            print('-------------------------------------')
+            print(' ----------------------------------------')
         else:
             print()
 
 
+def main():
+    ships = {
+        'aircraft carrier': 5,
+        'battleship': 4,
+        'submarine': 3,
+        'destroyer': 3,
+        'patrol boat': 2
+    }
+    board = []
+
+    for i in range(10):
+        board_row = []
+        for j in range(10):
+            board_row.append(-1)
+        board.append(board_row)
+
+    user_board = copy.deepcopy(board)
+    comp_board = copy.deepcopy(board)
+
+    user_board.append(copy.deepcopy(ships))
+    comp_board.append(copy.deepcopy(ships))
+
+    user_board = user_place_ships(user_board, ships)
+    comp_board = computer_place_ships(comp_board, ships)
+
+    while 1:
+        print_board("c", comp_board)
+        comp_board = user_move(comp_board)
+
+        if comp_board == "WIN":
+            print("User WON! :)")
+            quit()
+
+        print_board("c", comp_board)
+        input("To end user turn hit ENTER")
+        user_board = computer_move(user_board)
+
+        if user_board == "WIN":
+            print("Computer WON! :(")
+            quit()
+
+        print_board("u", user_board)
+        input("To end computer turn hit ENTER")
+
+
+if __name__ == '__main__':
+    main()
