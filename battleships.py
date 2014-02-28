@@ -192,6 +192,7 @@ def check_sink(board, x, y):
     if board[-1][ship] == 0:
         print(ship + ' sunk!')
 
+
 def check_win(board):
     for i in range(10):
         for j in range(10):
@@ -199,3 +200,46 @@ def check_win(board):
                 return False
 
     return True
+
+
+def print_board(s, board):
+    player = 'Computer'
+
+    if s == 'u':
+        player = 'User'
+
+    print('The ' + player + '\'s board looks like this: \n')
+    print(' ')
+
+    for i in range(10):
+        print(' ' + str(i+1) + ' ')
+    print('\n')
+
+    for i in range(10):
+        if i != 9:
+            print(str(i+1) + ' ')
+        else:
+            print(str(i+1) + '')
+
+        for j in range(10):
+            if board[i][j] == -1:
+                print(' ')
+            elif s == 'u':
+                print(board[i][j])
+            elif s == 'c':
+                if board[i][j] == '*' or board[i][j] == '$':
+                    print(board[i][j])
+                else:
+                    print(" ")
+
+            if j != 9:
+                print(" | ")
+
+        print()
+
+        if i != 9:
+            print('-------------------------------------')
+        else:
+            print()
+
+
