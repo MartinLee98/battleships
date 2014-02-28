@@ -171,3 +171,23 @@ def make_move(board, x, y):
         return 'try again'
     else:
         return 'hit'
+
+
+def check_sink(board, x, y):
+    ship = ''
+
+    if board[x][y] == 'A':
+        ship = 'aircraft carrier'
+    elif board[x][y] == 'B':
+        ship = 'battleship'
+    elif board[x][y] == 'S':
+        ship = 'submarine'
+    elif board[x][y] == 'D':
+        ship = 'destroyer'
+    elif board[x][y] == 'P':
+        ship = 'patrol boat'
+
+    board[-1][ship] -= 1
+
+    if board[-1][ship] == 0:
+        print(ship + ' sunk!')
