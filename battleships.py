@@ -160,6 +160,14 @@ def computer_move(board):
             print('Sorry, ' + str(x+1) + ',' + str(y+1) + ' is a miss')
             board[x][y] = '*'
 
-        if res != 'Try again':
+        if res != 'try again':
             return board
 
+
+def make_move(board, x, y):
+    if board[x][y] == -1:
+        return 'miss'
+    elif board[x][y] == '*' or board[x][y] == '$':
+        return 'try again'
+    else:
+        return 'hit'
