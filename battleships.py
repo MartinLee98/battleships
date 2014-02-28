@@ -191,3 +191,11 @@ def check_sink(board, x, y):
 
     if board[-1][ship] == 0:
         print(ship + ' sunk!')
+
+def check_win(board):
+    for i in range(10):
+        for j in range(10):
+            if board[i][j] != -1 and board[i][j] != '*' and board[i][j] != '$':
+                return False
+
+    return True
