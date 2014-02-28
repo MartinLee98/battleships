@@ -142,3 +142,24 @@ def user_move(board):
 
         if res != "try again":
             return board
+
+def computer_move(board):
+    while True:
+        x = random.randint(1, 10)-1
+        y = random.randint(1, 10)-1
+        res = make_move(board, x, y)
+
+        if res == 'hit':
+            print('Hit at' + str(x+1) + ',' + str(y+1))
+            check_sink(board, x, y)
+            board[x][y] = '$'
+
+            if check_win(board):
+                return 'WIN'
+        elif res == 'miss':
+            print('Sorry, ' + str(x+1) + ',' + str(y+1) + ' is a miss')
+            board[x][y] = '*'
+
+        if res != 'Try again':
+            return board
+
