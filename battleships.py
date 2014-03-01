@@ -68,11 +68,14 @@ def validate(board, ship, x, y, orientation):
         if orientation == 'v':
             for i in range(ship):
                 if board[x+i][y] != -1:
+                    print("!!!")
                     return False
         elif orientation == 'h':
             for i in range(ship):
                 if board[x][y+i] != -1:
                     return False
+
+    return True
 
 
 def place_ship(board, ship, s, x, y, orientation):
@@ -105,7 +108,7 @@ def computer_place_ships(board, ships):
                 orientation = 'h'
             valid = validate(board, ships[ship], x, y, orientation)
 
-        print("Computer placing a/an" + ship)
+        print("Computer placing a/an " + ship)
         board = place_ship(board, ships[ship], ship[0], x, y, orientation)
 
     return board
@@ -177,10 +180,11 @@ def check_sink(board, x, y):
     elif board[x][y] == 'P':
         ship = 'patrol boat'
 
-    board[-1][ship] -= 1
+    if ship:
+        board[-1][ship] -= 1
 
-    if board[-1][ship] == 0:
-        print(ship + ' sunk!')
+        if board[-1][ship] == 0:
+            print(ship + ' sunk!')
 
 
 def check_win(board):
